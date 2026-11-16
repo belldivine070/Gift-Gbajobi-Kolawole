@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Kolawole | Customer Care & Client Success Specialist</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#e11d48',
+                            600: '#be123c',
+                            700: '#9f1239',
+                            900: '#4c0519',
+                        },
+                        indigoBrand: {
+                            50: '#f0f3ff',
+                            600: '#3730a3',
+                            800: '#1e1b4b',
+                            900: '#0f172a',
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Script to set initial theme without flicker -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #be123c 0%, #4338ca 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #fb7185 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: radial-gradient(circle at 70% 20%, rgba(225, 29, 72, 0.08) 0%, rgba(255, 255, 255, 0) 60%),
+                        radial-gradient(circle at 10% 80%, rgba(67, 56, 202, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+        .dark .hero-bg {
+            background: radial-gradient(circle at 70% 20%, rgba(225, 29, 72, 0.15) 0%, rgba(15, 23, 42, 0) 60%),
+                        radial-gradient(circle at 10% 80%, rgba(67, 56, 202, 0.15) 0%, rgba(15, 23, 42, 0) 60%);
+        }
+        .chat-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .profile-glow {
+            box-shadow: 0 0 40px -10px rgba(190, 18, 60, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-brand-600 selection:text-white transition-colors duration-300">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo / Brand Name -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigoBrand-600 flex items-center justify-center text-white font-bold text-lg shadow-md group-hover:scale-105 transition-transform">
+                    GK
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">Gift <span class="text-brand-600 dark:text-brand-400">Kolawole</span></span>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Customer Care Specialist</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-slate-600 dark:text-slate-300">
+                <a href="#about" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">About Me</a>
+                <a href="#services" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Services</a>
+                <a href="#sandbox" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Support Sandbox</a>
+                <a href="#analytics" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Performance</a>
+                <a href="#contact" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Action Buttons + Theme Toggle -->
+            <div class="hidden sm:flex items-center gap-3">
+                <!-- Dark / Light Mode Toggle Button -->
+                <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-all" aria-label="Toggle dark mode">
+                    <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm hidden"></i>
+                    <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm hidden"></i>
+                </button>
+
+                <a href="https://wa.me/2349078228585" target="_blank" class="px-4 py-2.5 rounded-xl border border-emerald-300 dark:border-emerald-800/60 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 font-semibold text-xs flex items-center gap-2 transition-all">
+                    <i class="fa-brands fa-whatsapp text-sm text-emerald-600 dark:text-emerald-400"></i> WhatsApp Chat
+                </a>
+                <a href="#contact" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-md shadow-brand-600/20 hover:shadow-lg transition-all">
+                    Hire Gift
+                </a>
+            </div>
+
+            <!-- Mobile Action Row (Theme toggle + Menu toggle) -->
+            <div class="flex items-center gap-2 md:hidden">
+                <button id="theme-toggle-mobile" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" aria-label="Toggle dark mode mobile">
+                    <i id="theme-toggle-dark-icon-mobile" class="fa-solid fa-moon text-sm hidden"></i>
+                    <i id="theme-toggle-light-icon-mobile" class="fa-solid fa-sun text-sm hidden"></i>
+                </button>
+
+                <button id="mobile-menu-btn" class="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:outline-none" aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">About Me</a>
+            <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Services</a>
+            <a href="#sandbox" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Support Sandbox</a>
+            <a href="#analytics" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Performance Metrics</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Contact Gift</a>
+            <div class="pt-2 flex flex-col gap-2">
+                <a href="https://wa.me/2349078228585" target="_blank" class="w-full text-center px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold text-sm flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        
+        <!-- Hero Section -->
+        <section class="relative pt-12 pb-20 md:pt-24 md:pb-28 overflow-hidden hero-bg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Hero Intro -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 dark:bg-brand-950/60 border border-brand-100 dark:border-brand-900 text-brand-700 dark:text-brand-300 text-xs font-bold uppercase tracking-wider">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Available for Full-time & Specialist Roles
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                            Elevating Customer Loyalty & <span class="gradient-text">Client Success</span>
+                        </h1>
+                        
+                        <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            Hi, I’m <strong>Gift Kolawole</strong> — a passionate Customer Care Specialist dedicated to swift issue resolution, active listening, empathetic support, and maintaining 98%+ CSAT across omnichannel platforms.
+                        </p>
+                        
+                        <!-- CTA Action Row -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                            <a href="#contact" class="px-7 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold shadow-lg shadow-brand-600/25 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Get in Touch
+                            </a>
+                            <a href="https://wa.me/2349078228585" target="_blank" class="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp Direct
+                            </a>
+                            <a href="https://www.linkedin.com/in/gift-kolawole-551844382?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="px-5 py-3.5 rounded-xl bg-indigoBrand-800 hover:bg-indigoBrand-900 text-white font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-linkedin text-lg"></i> LinkedIn Profile
+                            </a>
+                        </div>
+
+                        <!-- Quick Badges -->
+                        <div class="pt-6 border-t border-slate-200/80 dark:border-slate-800 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-600 dark:text-slate-400 text-xs font-semibold">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-brand-600 dark:text-brand-400"></i> giftyblerk24@gmail.com
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-phone text-emerald-600 dark:text-emerald-400"></i> 09078228585
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-indigo-600 dark:text-indigo-400"></i> Omnichannel Helpdesk Master
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Portrait Display -->
+                    <div class="lg:col-span-5 relative flex justify-center">
+                        <div class="relative max-w-sm w-full">
+                            <!-- Background Glow Effects -->
+                            <div class="absolute -top-6 -left-6 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                            <div class="absolute -bottom-6 -right-6 w-64 h-64 bg-indigoBrand-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                            
+                            <!-- Main Portrait Frame -->
+                            <div class="relative rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 profile-glow">
+                                <div class="overflow-hidden rounded-2xl bg-slate-900 relative group">
+                                    <img src="image.jpg" alt="Gift Kolawole - Customer Care Specialist" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                    
+                                    <!-- Badge Overlay -->
+                                    <div class="absolute bottom-4 left-4 right-4 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 p-3.5 rounded-xl text-white flex items-center justify-between">
+                                        <div>
+                                            <h3 class="text-sm font-bold text-white">Gift Kolawole</h3>
+                                            <p class="text-[11px] text-brand-300">Customer Success & Support</p>
+                                        </div>
+                                        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-medium">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Online
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <section class="bg-indigoBrand-800 dark:bg-slate-900 text-white py-12 relative shadow-inner border-y border-indigo-900/50 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-y lg:divide-y-0 lg:divide-x divide-indigo-700/60 dark:divide-slate-800">
+                    <div class="p-2">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-brand-50 dark:text-brand-400 mb-1">98.5%</div>
+                        <p class="text-xs font-semibold text-slate-300 dark:text-slate-400 uppercase tracking-wider">Average CSAT Score</p>
+                    </div>
+                    <div class="p-2">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1">&lt; 15 Mins</div>
+                        <p class="text-xs font-semibold text-slate-300 dark:text-slate-400 uppercase tracking-wider">First Response SLA</p>
+                    </div>
+                    <div class="p-2">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-white mb-1">10,000+</div>
+                        <p class="text-xs font-semibold text-slate-300 dark:text-slate-400 uppercase tracking-wider">Tickets Resolved</p>
+                    </div>
+                    <div class="p-2">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-amber-400 mb-1">99%</div>
+                        <p class="text-xs font-semibold text-slate-300 dark:text-slate-400 uppercase tracking-wider">First Contact Resolution</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Gift Kolawole Section -->
+        <section id="about" class="py-20 bg-white dark:bg-slate-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Image Thumbnail & Values -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="relative">
+                            <img src="image.jpg" alt="Gift Kolawole portrait" class="rounded-2xl shadow-xl w-full max-w-md mx-auto object-cover border-4 border-slate-100 dark:border-slate-800">
+                            <div class="absolute -bottom-4 -right-4 bg-brand-600 text-white p-5 rounded-2xl shadow-lg hidden sm:block">
+                                <i class="fa-solid fa-heart text-2xl mb-1 block"></i>
+                                <p class="text-xs font-bold">Client First Mindset</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Bio Text -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">About Gift Kolawole</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Dedicated to Transforming Customer Support into Brand Advocacy</h2>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            I am <strong>Gift Kolawole</strong>, a customer success enthusiast with proven experience in delivering empathetic, fast, and solution-driven customer care. My core focus centers on taking the friction out of client inquiries, managing escalations with grace, and ensuring every single touchpoint leaves a positive impression.
+                        </p>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Whether managing live web chat queues, resolving email tickets, handling incoming calls, or nurturing client relationships over social channels like WhatsApp and Facebook, I prioritize active listening and swift troubleshooting.
+                        </p>
+
+                        <!-- Pillar Values -->
+                        <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                                <div class="flex items-center gap-3 font-bold text-slate-900 dark:text-white mb-1">
+                                    <i class="fa-solid fa-hand-holding-heart text-brand-600 dark:text-brand-400"></i> Empathy-Driven Support
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Understanding customer pain points deeply to provide thoughtful, reassuring solutions.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                                <div class="flex items-center gap-3 font-bold text-slate-900 dark:text-white mb-1">
+                                    <i class="fa-solid fa-bolt text-amber-500"></i> Rapid Escalation Handling
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">De-escalating tense scenarios calmly while aligning with internal technical or billing teams.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                                <div class="flex items-center gap-3 font-bold text-slate-900 dark:text-white mb-1">
+                                    <i class="fa-solid fa-comments text-indigo-600 dark:text-indigo-400"></i> Omnichannel Mastery
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Seamless support across Email, Live Chat, WhatsApp, Call Center, and Social Media.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                                <div class="flex items-center gap-3 font-bold text-slate-900 dark:text-white mb-1">
+                                    <i class="fa-solid fa-chart-line text-emerald-600 dark:text-emerald-400"></i> SLA & CSAT Optimization
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Consistently exceeding response time guarantees and maintaining high customer satisfaction.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Services & Capabilities Grid -->
+        <section id="services" class="py-20 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest mb-3">Core Competencies</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">How Gift Delivers Exceptional Support</p>
+                    <p class="mt-4 text-slate-600 dark:text-slate-300">Comprehensive customer care services tailored for growing businesses, e-commerce, and digital platforms.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1 -->
+                    <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center text-xl mb-6 font-bold">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Live Chat & Ticket Management</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                            Prompt triage and resolution of customer tickets via Zendesk, Intercom, Gorgias, and LiveChat platforms with strict SLA adherence.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mb-6 font-bold">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Social & Instant Messaging</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                            Direct, conversational customer care over WhatsApp Business, Facebook Messenger, and Instagram DMs to keep engagement natural and fast.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl mb-6 font-bold">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Inbound Call Handling</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                            Warm, professional voice communications, phone support, order verification, and polite conflict resolution over voice channels.
+                        </p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl mb-6 font-bold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Conflict & Escalation Mgmt</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                            De-escalating dissatisfied users, managing refund requests or billing discrepancies with diplomacy, preserving brand trust.
+                        </p>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl mb-6 font-bold">
+                            <i class="fa-solid fa-arrows-spin"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Retention & Customer Onboarding</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                            Guiding new customers through initial setup, product walkthroughs, and proactive check-ins to minimize customer churn.
+                        </p>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl mb-6 font-bold">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">FAQ & Knowledge Base Creation</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                            Documenting standard operating procedures (SOPs), writing self-serve help articles, and training AI support tools to reduce repeat tickets.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Support Response Sandbox / Demo -->
+        <section id="sandbox" class="py-20 bg-white dark:bg-slate-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-14">
+                    <h2 class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest mb-3">Interactive Demo</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Experience Gift's Response Style in Action</p>
+                    <p class="mt-3 text-slate-600 dark:text-slate-300 text-sm">Click on any common customer scenario below to preview how Gift Kolawole crafts thoughtful, empathetic, and professional support resolutions.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto grid md:grid-cols-12 gap-8 items-start bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 text-white shadow-2xl">
+                    
+                    <!-- Scenario Selector Controls -->
+                    <div class="md:col-span-5 space-y-3">
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Select Scenario:</p>
+                        
+                        <button onclick="selectScenario('delay')" id="btn-delay" class="scenario-btn w-full text-left p-4 rounded-xl border border-brand-500/50 bg-brand-900/30 hover:bg-slate-800 transition-all flex items-center justify-between group">
+                            <div>
+                                <span class="text-xs text-brand-400 font-bold block mb-0.5">E-Commerce</span>
+                                <h4 class="font-bold text-sm text-slate-100">Delayed Delivery Order</h4>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <button onclick="selectScenario('refund')" id="btn-refund" class="scenario-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-800/50 hover:bg-slate-800 transition-all flex items-center justify-between group">
+                            <div>
+                                <span class="text-xs text-amber-400 font-bold block mb-0.5">Billing</span>
+                                <h4 class="font-bold text-sm text-slate-100">Disputed Invoice / Refund</h4>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <button onclick="selectScenario('tech')" id="btn-tech" class="scenario-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-800/50 hover:bg-slate-800 transition-all flex items-center justify-between group">
+                            <div>
+                                <span class="text-xs text-indigo-400 font-bold block mb-0.5">Account / Tech</span>
+                                <h4 class="font-bold text-sm text-slate-100">Account Lockout & Verification</h4>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <button onclick="selectScenario('vip')" id="btn-vip" class="scenario-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-800/50 hover:bg-slate-800 transition-all flex items-center justify-between group">
+                            <div>
+                                <span class="text-xs text-emerald-400 font-bold block mb-0.5">VIP Escalation</span>
+                                <h4 class="font-bold text-sm text-slate-100">Frustrated Enterprise Client</h4>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+
+                    <!-- Output Preview Box -->
+                    <div class="md:col-span-7 bg-slate-800/90 rounded-2xl p-6 border border-slate-700/80 space-y-4 flex flex-col justify-between min-h-[380px]">
+                        <div>
+                            <!-- Header Info -->
+                            <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+                                <div class="flex items-center gap-3">
+                                    <img src="image.jpg" alt="Gift Kolawole" class="w-10 h-10 rounded-full object-cover border border-brand-500">
+                                    <div>
+                                        <h4 class="text-sm font-bold text-white">Gift Kolawole</h4>
+                                        <p class="text-[11px] text-slate-400">Response Template Preview</p>
+                                    </div>
+                                </div>
+                                <span id="scenario-tag" class="px-2.5 py-1 rounded bg-brand-500/20 text-brand-300 text-xs font-semibold">E-Commerce</span>
+                            </div>
+
+                            <!-- Customer Inquiry Context -->
+                            <div class="my-4 p-3 rounded-xl bg-slate-900/60 border border-slate-700/50 text-xs text-slate-300">
+                                <span class="font-bold text-slate-400 uppercase text-[10px] block mb-1">Incoming Customer Inquiry:</span>
+                                <p id="scenario-query" class="italic">"Where is my package? It was supposed to arrive two days ago and nobody has updated me!"</p>
+                            </div>
+
+                            <!-- Gift's Professional Response -->
+                            <div class="space-y-2">
+                                <span class="font-bold text-emerald-400 uppercase text-[10px] tracking-wider block">Gift's Resolution Strategy:</span>
+                                <div id="scenario-response" class="p-4 rounded-xl bg-slate-900 text-slate-200 text-xs leading-relaxed border-l-4 border-brand-600">
+                                    "Hello [Customer Name], thank you for reaching out! I completely understand your concern regarding the delivery delay, and I sincerely apologize for the lack of updates.<br><br>I have personally checked with our logistics partner—your package is currently in transit and scheduled for delivery tomorrow morning. I’ve flagged your shipment for priority tracking and emailed you the direct tracking link. I'll personally follow up with you tomorrow to confirm arrival!"
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Key Metrics Highlight for this template -->
+                        <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between text-[11px] text-slate-400">
+                            <span class="flex items-center gap-1.5 text-emerald-400"><i class="fa-solid fa-check"></i> Tone: Reassuring & Actionable</span>
+                            <span>Target CSAT: 99%</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Metrics Chart Dashboard -->
+        <section id="analytics" class="py-20 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest mb-3">Proven Track Record</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Consistency in Key Performance Indicators</p>
+                    <p class="mt-4 text-slate-600 dark:text-slate-300">A visual breakdown of Gift's monthly customer satisfaction (CSAT) scores and first response times.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    
+                    <!-- Chart 1: CSAT Trend -->
+                    <div class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Monthly CSAT Score Trend (%)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Target Benchmark: 95%</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 text-xs font-bold">+3.5% Over Target</span>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="csatChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: SLA Response Times -->
+                    <div class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Average First Response Time (Mins)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Live Chat vs Email Tickets</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded bg-brand-100 dark:bg-brand-950/60 text-brand-700 dark:text-brand-400 text-xs font-bold">Fast SLAs</span>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="slaChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools & Software Proficiency -->
+        <section class="py-20 bg-white dark:bg-slate-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-14">
+                    <h2 class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest mb-3">Tool Stack</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Software & CRM Platforms Gift Commands</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                    
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-headset text-3xl text-brand-600 dark:text-brand-400 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Zendesk Suite</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Ticketing & Macro Rules</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-comments text-3xl text-blue-600 dark:text-blue-400 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Intercom</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">In-App Chat & Workflows</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-brands fa-whatsapp text-3xl text-emerald-600 dark:text-emerald-400 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">WhatsApp Business</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Direct Client Support</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-cloud text-3xl text-sky-600 dark:text-sky-400 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Salesforce CRM</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Client Profile Mgmt</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-box text-3xl text-indigo-600 dark:text-indigo-400 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Gorgias</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">E-Commerce Helpdesk</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-brands fa-slack text-3xl text-purple-600 dark:text-purple-400 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Slack & Teams</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Internal Escalations</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-file-excel text-3xl text-emerald-700 dark:text-emerald-500 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Microsoft Office 365</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Excel & Report Analytics</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500 hover:shadow-md transition-all flex flex-col items-center justify-center">
+                        <i class="fa-brands fa-facebook text-3xl text-blue-700 dark:text-blue-500 mb-3"></i>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Meta Business Suite</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">FB & IG Support</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Social Links Section -->
+        <section id="contact" class="py-20 bg-slate-900 text-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Contact Info -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <span class="text-xs font-bold text-brand-400 uppercase tracking-widest">Connect With Gift</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Ready to Elevate Your Customer Experience?</h2>
+                        <p class="text-slate-400 leading-relaxed text-sm">
+                            I am currently open to full-time customer care opportunities, client success contracts, and customer support specialist roles. Let's discuss how I can bring high CSAT scores to your team!
+                        </p>
+
+                        <div class="space-y-4 pt-2">
+                            
+                            <!-- Email -->
+                            <a href="mailto:giftyblerk24@gmail.com" class="flex items-center gap-4 p-4 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700/80 transition-all group">
+                                <div class="w-12 h-12 rounded-lg bg-brand-600/20 text-brand-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs text-slate-400">Direct Email</p>
+                                    <p class="font-semibold text-slate-100 truncate text-sm">giftyblerk24@gmail.com</p>
+                                </div>
+                            </a>
+
+                            <!-- Phone / Call -->
+                            <a href="tel:09078228585" class="flex items-center gap-4 p-4 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700/80 transition-all group">
+                                <div class="w-12 h-12 rounded-lg bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">Phone Call / Mobile</p>
+                                    <p class="font-semibold text-slate-100 text-sm">09078228585</p>
+                                </div>
+                            </a>
+
+                            <!-- WhatsApp Direct -->
+                            <a href="https://wa.me/2349078228585" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700/80 transition-all group">
+                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">WhatsApp Instant Chat</p>
+                                    <p class="font-semibold text-emerald-400 text-sm">Chat with Gift (+234 907 822 8585)</p>
+                                </div>
+                            </a>
+
+                            <!-- LinkedIn -->
+                            <a href="https://www.linkedin.com/in/gift-kolawole-551844382?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700/80 transition-all group">
+                                <div class="w-12 h-12 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs text-slate-400">LinkedIn Profile</p>
+                                    <p class="font-semibold text-indigo-300 truncate text-sm">Gift Kolawole on LinkedIn</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- Right Quick Form -->
+                    <div class="lg:col-span-7 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 p-8 sm:p-10 rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-800">
+                        <h3 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white">Send Gift a Direct Message</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Have an open support role or need client care expertise? Fill out the details below.</p>
+
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-300 mb-1">Your Name *</label>
+                                    <input type="text" required placeholder="e.g. Sarah Jenkins" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-300 mb-1">Your Email *</label>
+                                    <input type="email" required placeholder="sarah@company.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none text-xs">
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-300 mb-1">Company / Industry</label>
+                                    <input type="text" placeholder="e.g. E-Commerce / Fintech" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-300 mb-1">Opportunity Type</label>
+                                    <select class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none text-xs">
+                                        <option>Full-Time Support Specialist</option>
+                                        <option>Customer Success Manager</option>
+                                        <option>Contract / Remote Care Role</option>
+                                        <option>General Inquiry</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-300 mb-1">Message</label>
+                                <textarea rows="4" required placeholder="Share details about your team or project..." class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none text-xs"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all text-xs uppercase tracking-wider">
+                                Send Message to Gift
+                            </button>
+                        </form>
+
+                        <div id="form-success-msg" class="hidden p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 mt-4 text-center text-xs font-semibold">
+                            <i class="fa-solid fa-circle-check text-sm mr-1"></i> Thank you! Your message has been sent to Gift Kolawole. She will get back to you shortly.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="image.jpg" alt="Gift Kolawole" class="w-8 h-8 rounded-full object-cover">
+                <span class="text-sm font-bold text-white">Gift Kolawole</span>
+                <span class="text-xs text-slate-500">| Customer Care Specialist</span>
+            </div>
+
+            <p class="text-xs">&copy; 2026 Gift Kolawole. All rights reserved.</p>
+
+            <div class="flex items-center gap-5 text-slate-400 text-base">
+                <a href="https://wa.me/2349078228585" target="_blank" class="hover:text-emerald-400 transition-colors" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.linkedin.com/in/gift-kolawole-551844382?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="hover:text-indigo-400 transition-colors" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:giftyblerk24@gmail.com" class="hover:text-brand-400 transition-colors" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Dark / Light Theme Toggle Management
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkIconMobile = document.getElementById('theme-toggle-dark-icon-mobile');
+        const lightIconMobile = document.getElementById('theme-toggle-light-icon-mobile');
+
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+                if (darkIconMobile) darkIconMobile.classList.add('hidden');
+                if (lightIconMobile) lightIconMobile.classList.remove('hidden');
+            } else {
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                if (lightIconMobile) lightIconMobile.classList.add('hidden');
+                if (darkIconMobile) darkIconMobile.classList.remove('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcons();
+            updateChartsTheme();
+        }
+
+        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+        if (themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
+        updateThemeIcons();
+
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Scenario Data for Interactive Support Sandbox
+        const scenarios = {
+            delay: {
+                category: "E-Commerce",
+                categoryClass: "bg-brand-500/20 text-brand-300",
+                query: `"Where is my package? It was supposed to arrive two days ago and nobody has updated me!"`,
+                response: `"Hello [Customer Name], thank you for reaching out! I completely understand your concern regarding the delivery delay, and I sincerely apologize for the lack of updates.<br><br>I have checked directly with our dispatch partner—your package is currently in transit and scheduled for delivery tomorrow morning. I’ve flagged your shipment for priority tracking and sent you the direct tracking link. I will personally follow up with you tomorrow to ensure it arrives!"`
+            },
+            refund: {
+                category: "Billing & Refund",
+                categoryClass: "bg-amber-500/20 text-amber-300",
+                query: `"I was charged twice on my card for subscription renewal. I need a refund immediately!"`,
+                response: `"Hi [Customer Name], thank you for bringing this to my attention! I understand how concerning an accidental duplicate charge is, and I am taking care of this for you right now.<br><br>I have verified your account records and processed a full refund of $49.00 for the duplicate charge back to your original payment method. Depending on your bank, it should reflect in 2-3 business days. I’ve also emailed you the refund confirmation receipt!"`
+            },
+            tech: {
+                category: "Account & Access",
+                categoryClass: "bg-indigo-500/20 text-indigo-300",
+                query: `"I'm locked out of my dashboard and the password reset link isn't arriving in my inbox."`,
+                response: `"Hello [Customer Name], I know how frustrating it is to be locked out when you need to access your work. Let's get you back in right away!<br><br>First, please check your Spam/Junk folder for automated emails. In the meantime, I have issued a secure one-time temporary access code directly to your verified secondary contact. Please use this code to log in and reset your password."`
+            },
+            vip: {
+                category: "VIP Escalation",
+                categoryClass: "bg-emerald-500/20 text-emerald-300",
+                query: `"Our team is facing critical downtime with the service and we demand an immediate update!"`,
+                response: `"Dear [Client Name], thank you for bringing this high-priority concern directly to us. I recognize the severity of downtime for your business operations.<br><br>I have immediately escalated this to our Senior Systems Engineer and Lead Account Manager. Our team is actively investigating the root cause. I will be your primary liaison and will provide live status updates every 15 minutes until this issue is resolved."`
+            }
+        };
+
+        function selectScenario(type) {
+            const data = scenarios[type];
+            if (!data) return;
+
+            // Highlight selected scenario button
+            document.querySelectorAll('.scenario-btn').forEach(btn => {
+                btn.classList.remove('border-brand-500/50', 'bg-brand-900/30');
+                btn.classList.add('border-slate-800', 'bg-slate-800/50');
+            });
+            const activeBtn = document.getElementById(`btn-${type}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800', 'bg-slate-800/50');
+                activeBtn.classList.add('border-brand-500/50', 'bg-brand-900/30');
+            }
+
+            // Update content
+            document.getElementById('scenario-tag').className = `px-2.5 py-1 rounded ${data.categoryClass} text-xs font-semibold`;
+            document.getElementById('scenario-tag').innerText = data.category;
+            document.getElementById('scenario-query').innerText = data.query;
+            document.getElementById('scenario-response').innerHTML = data.response;
+        }
+
+        // Form Submission Mock
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const successMsg = document.getElementById('form-success-msg');
+            const form = document.getElementById('contact-form');
+            form.reset();
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 6000);
+        }
+
+        let csatChartInstance = null;
+        let slaChartInstance = null;
+
+        function updateChartsTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const labelColor = isDark ? '#cbd5e1' : '#475569';
+            const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+
+            if (csatChartInstance) {
+                csatChartInstance.options.scales.x.ticks.color = labelColor;
+                csatChartInstance.options.scales.y.ticks.color = labelColor;
+                csatChartInstance.options.scales.x.grid.color = gridColor;
+                csatChartInstance.options.scales.y.grid.color = gridColor;
+                csatChartInstance.options.plugins.legend.labels.color = labelColor;
+                csatChartInstance.update();
+            }
+
+            if (slaChartInstance) {
+                slaChartInstance.options.scales.x.ticks.color = labelColor;
+                slaChartInstance.options.scales.y.ticks.color = labelColor;
+                slaChartInstance.options.scales.x.grid.color = gridColor;
+                slaChartInstance.options.scales.y.grid.color = gridColor;
+                slaChartInstance.options.scales.y.title.color = labelColor;
+                slaChartInstance.update();
+            }
+        }
+
+        // Render Performance Charts on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const labelColor = isDark ? '#cbd5e1' : '#475569';
+            const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+
+            // CSAT Line Chart
+            const csatCtx = document.getElementById('csatChart')?.getContext('2d');
+            if (csatCtx) {
+                csatChartInstance = new Chart(csatCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Gift\'s CSAT (%)',
+                            data: [96.5, 97.2, 98.0, 97.8, 98.6, 98.5],
+                            borderColor: '#be123c',
+                            backgroundColor: 'rgba(190, 18, 60, 0.15)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: '#be123c',
+                            pointRadius: 5
+                        }, {
+                            label: 'Industry Target (95%)',
+                            data: [95, 95, 95, 95, 95, 95],
+                            borderColor: '#94a3b8',
+                            borderDash: [5, 5],
+                            borderWidth: 1.5,
+                            fill: false,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: labelColor }
+                            }
+                        },
+                        scales: {
+                            x: { ticks: { color: labelColor }, grid: { color: gridColor } },
+                            y: { min: 90, max: 100, ticks: { color: labelColor }, grid: { color: gridColor } }
+                        }
+                    }
+                });
+            }
+
+            // SLA Bar Chart
+            const slaCtx = document.getElementById('slaChart')?.getContext('2d');
+            if (slaCtx) {
+                slaChartInstance = new Chart(slaCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Live Chat', 'WhatsApp', 'Email Tickets', 'Social Media'],
+                        datasets: [{
+                            label: 'Avg First Response (Mins)',
+                            data: [1.5, 3.0, 14.0, 8.5],
+                            backgroundColor: ['#be123c', '#10b981', '#3730a3', '#f59e0b'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { ticks: { color: labelColor }, grid: { color: gridColor } },
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: labelColor },
+                                grid: { color: gridColor },
+                                title: { display: true, text: 'Minutes', color: labelColor }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
